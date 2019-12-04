@@ -31,6 +31,23 @@ Allowed options:
   --bits arg (=22)             Size in bits of the parameter vector
 ```
 
+### Build
+
+To build the project do:
+
+```
+1. mkdir build
+2. cd build
+3. cmake ..
+4. make
+```
+
+and then run it
+
+```
+./bin/main
+```
+
 # References
 
 [1] HOGWILD!: A Lock-Free Approach to Parallelizing Stochastic Gradient Descent

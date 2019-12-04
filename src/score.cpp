@@ -1,69 +1,30 @@
-#include <array>
+#include "score.hpp"
 
-using namespace std;
 
-struct_t stats{
-    unsigned int true_positives;
-    unsigned int true_negatives;
-    unsigned int false_positives;
-    unsigned int false_negatives;
-    double threshold;
+Scorer::Scorer(){
+    this->reset();
 };
 
-class Scorer{
-private:
-    unsigned int n;
-    unsigned int residual_sum;
-    array<stats> bins;
+Scorer::~Scorer(){
+    this->reset();
+};
 
-
-public:
-    Scorer(unsigned int nbins);
-    void add(double prediction, double ground_truth);
-    double auc_roc();
-}
-
-Scorer::Scorer(unsigned int nbins){
-    bins = vector<stats>(nbins)
-    double bin_width = (1 / nbins);
-    for(int i = 0; i < sample_size; i++){
-        bins[i].true_positives = 0;
-        bins[i].true_negatives = 0;
-        bins[i].false_positives = 0;
-        bins[i].false_negatives = 0;
-        bins[i].threshold = i * bin_width;
-    }
-}
-
-void Scorer::add(double prediction, double ground_truth){
+void Scorer::add(Observation& obs, double prediction){
     n++;
-    for(auto& stat : classification_stats){
-        if(prediction > threshold){
-            if(ground_truth = 1.0) stat->true_positives++;
-            if(ground_truth = 0.0) stat->false_positives++;
-        } else {
-            if(ground_truth = 1.0) stat->false_negatives++;
-            if(ground_truth = 0.0) stat->true_negatives++;
-        }
-    };
-    residual_sum += prediction += 
+    sae += abs(prediction - obs.response);
+    sse += pow(prediction - obs.response, 2);
+    if (obs.response == 1) positives++;
+    else negatives++;
 };
 
+void Scorer::show(){
+    cout << "N: " << n << " | "
+         << "MAE: " << sae / n << " | "
+         << "MSE: " << sse / n << " | "
+         << "positives: " << ((double) positives) / n << " | "
+         << "negatives: " << ((double) negatives) / n << endl;
+};
 
-double Scorer::auc_roc(){
-    unsigned int auc;
-    for(auto& stat : classification_stats){
-        auc += stat->true_positives / stat->f
-        if(prediction > threshold){
-            if(ground_truth = 1.0) stat->true_positives++;
-            if(ground_truth = 0.0) stat->false_positives++;
-        } else {
-            if(ground_truth = 1.0) stat->false_negatives++;
-            if(ground_truth = 0.0) stat->true_negatives++;
-        }
-    };
-    residual_sum += prediction += 
-}
-
-
-
+void Scorer::reset(){
+    n = 0; sae = 0; sse = 0; positives = 0; negatives = 0;
+};

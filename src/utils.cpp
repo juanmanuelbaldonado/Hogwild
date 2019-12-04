@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-typedef vector<double> Vector;
+#include "utils.hpp"
 
 Vector& operator+=(Vector &x, const Vector &y) {
     for (size_t i = 0; i < x.size(); i++) x[i] += y[i];
@@ -60,4 +55,4 @@ vector<string> split(string str, char separator){
     while (ss >> temp)
         res.push_back(temp);
     return res;
-}
+};

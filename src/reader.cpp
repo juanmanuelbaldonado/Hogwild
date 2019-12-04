@@ -1,86 +1,29 @@
-#include <string>
-#include <vector>
-#include <sstream>
-#include <fstream>
-#include <iostream>
+#include "reader.hpp"
+#include "utils.hpp"
 
 using namespace std;
 
-/*
- * Parses a row of a CSV file.
- * @param str: input string to be parsed.
- * @param separator: attribute separating char.
- * 
- * @return record as a vector of strings.
- */
-vector<string> split(string str, char separator){
-    replace(str.begin(), str.end(), separator, ' ');
-    vector<string> res;
-    stringstream ss(str);
-    string temp;
-    while (ss >> temp)
-        res.push_back(temp);
-    return res;
-}
-
-struct Row{
-    vector<string> attributes;
-    vector<string> values;
-    Row(vector<string> attrs, vector<string> vals)
-        : attributes(attrs), values(vals) {};
-};
-
-
-/*
- * CSV reader object.
- * @param inputFileName: input file name (full path).
- * @param separator: char to be used as separator.
- */
-class CSVReader{
-private:
-    vector<string> colNames;
-    string currentLine;
-    ifstream fileStream;
-    string inputFileName;
-    char separator;
-
-public:
-    CSVReader(string inputFileName, char separator=',');
-    ~CSVReader();
-    void next(); /* Go to next line */
-    Row get();   /* Get currrent line */
-    bool end();
-    void restart();
-};
-
-CSVReader::CSVReader(string inputFileName, char separator){
+Reader::Reader(string inputFileName){
     this->inputFileName = inputFileName;
-    this->separator = separator;
     fileStream.open(inputFileName);
-    // Load first line.
-    next();
-    colNames = split(currentLine, separator);
-    next();
+    next(); // Load first line.
 }
 
-CSVReader::~CSVReader(){
+Reader::~Reader(){
     fileStream.close();
 };
 
-void CSVReader::next(){
+void Reader::next(){
     getline(fileStream, currentLine);
-}
+    if (fileStream.eof()) throw out_of_range("No more rows");
+};
 
-Row CSVReader::get(){
-    return Row(colNames, split(currentLine, separator));
-}
+string Reader::getLine(){
+    return currentLine;
+};
 
-bool CSVReader::end(){
-    return fileStream.eof();
-}
-
-void CSVReader::restart(){
+void Reader::top(){
     fileStream.clear();
     fileStream.seekg(0);
-    next();next();
-}
+    next();
+};

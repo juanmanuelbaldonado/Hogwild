@@ -12,8 +12,8 @@
 using namespace std;
 
 /*
- * Parser for SVMlight format
- * @param inputFileName: input file name (full path).
+ * SVMlight format parser.
+ * @param inputFileName: path to input file.
  */
 class Reader{
 private:

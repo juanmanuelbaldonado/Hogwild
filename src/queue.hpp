@@ -13,6 +13,10 @@ using namespace std;
 extern mt19937 RandomNumberGenerator;
 
 
+/*
+ * Thread-safe queue implementation.
+ */
+
 template <typename T>
 class SharedQueue{
 private:
@@ -28,6 +32,11 @@ public:
 };
 
 
+/*
+ * Work-distribution queue. 
+ * Each consumer has a dedicated queue and the work is 
+ * distributed uniformly among theese.
+ */
 template <typename T>
 class FairQueue{
 private:

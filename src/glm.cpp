@@ -29,6 +29,9 @@ double Poisson::link_inverse(double theta){
 };
 
 
+/*
+ * Generalized Linear Model.
+ */
 GLM::GLM(const RegressionType& regression_type, unsigned int bits, double lambda,
          double eta){
     this->bits = bits;

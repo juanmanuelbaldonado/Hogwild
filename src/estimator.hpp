@@ -41,12 +41,7 @@ public:
 
 
 /*
- * Estimator base class
- * 
- * @param str: input string to be parsed.
- * @param separator: attribute separating char.
- * 
- * @return record as a vector of strings.
+ * Estimator base class.
  */
 class Estimator{
 public:

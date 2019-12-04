@@ -8,20 +8,6 @@
 
 using namespace std;
 
-typedef vector<double> Vector;
-
-Vector& operator+=(Vector &x, const Vector &y);
-
-Vector& operator-=(Vector &x, const Vector &y);
-
-Vector operator+(Vector x, const Vector &y);
-
-Vector operator-(Vector x, const Vector &y);
-
-void divide(Vector& v, unsigned int n);
-
-void print_vector(vector<string> v);
-
 /*
  * Splits a string into substrings at the positions
  * that match the separator.
